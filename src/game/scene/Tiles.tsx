@@ -26,7 +26,7 @@ export function Tiles() {
         c.grass += GROUND_DEPTH.length;
         c.dirt += GROUND_DEPTH.length * 2;
       } else if (t === T.BRICK) c.brick++;
-      else if (t === T.QCOIN || t === T.QMUSH) {
+      else if (t === T.QCOIN || t === T.QPOWER) {
         c.question++;
         c.used++;
       } else if (t === T.USED) c.used++;
@@ -68,7 +68,7 @@ export function Tiles() {
           // Extra dirt below the bottom row so the ground never shows sky under it.
           if (ty === 0) for (const z of GROUND_DEPTH) push("dirt", x, -0.5, z);
         } else if (t === T.BRICK) push("brick", x, y, 0);
-        else if (t === T.QCOIN || t === T.QMUSH) push("question", x, y, 0);
+        else if (t === T.QCOIN || t === T.QPOWER) push("question", x, y, 0);
         else if (t === T.USED) push("used", x, y, 0);
         else if (t === T.STONE) push("stone", x, y, 0);
       }
@@ -113,7 +113,7 @@ export function Pipes() {
             <mesh
               geometry={BOX}
               material={mats.pipe}
-              position={[cx, 2 + bodyH / 2, 0]}
+              position={[cx, p.base + bodyH / 2, 0]}
               scale={[1.8, bodyH, 1.8]}
               castShadow
               receiveShadow
@@ -121,7 +121,7 @@ export function Pipes() {
             <mesh
               geometry={BOX}
               material={mats.pipeLip}
-              position={[cx, 2 + p.h - 0.45, 0]}
+              position={[cx, p.base + p.h - 0.45, 0]}
               scale={[2.1, 0.9, 2.1]}
               castShadow
               receiveShadow

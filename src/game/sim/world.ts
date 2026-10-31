@@ -296,7 +296,7 @@ function hitBlock(w: World, tx: number, ty: number) {
     w.bumps.push({ tx, ty, t: 0 });
     w.effects.push({ kind: "coin", x: tx + 0.5, y: ty + 1, vx: 0, vy: 12, t: 0, life: 0.55 });
     addCoin(w);
-  } else if (t === T.QMUSH) {
+  } else if (t === T.QPOWER) {
     setTile(w, tx, ty, T.USED);
     w.bumps.push({ tx, ty, t: 0 });
     w.mushrooms.push({
