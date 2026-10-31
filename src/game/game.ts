@@ -1,6 +1,7 @@
 // Shared game instance (world + merged input) and the HUD store.
 import { create } from "zustand";
-import { createWorld, type Input, type Status, type World } from "./sim/world";
+import { createWorld, restartGame, startGame, type Input, type Status, type World } from "./sim/world";
+import { unlockAudio } from "./audio";
 
 export interface Game {
   world: World;
@@ -36,3 +37,11 @@ export const useHud = create<HudState>(() => ({
   status: "title",
   muted: false,
 }));
+
+/** Start from the title screen, or restart after game over / course clear. */
+export function beginOrRestart() {
+  const w = getGame().world;
+  unlockAudio();
+  if (w.status === "title") startGame(w);
+  else if (w.status === "gameover" || w.status === "won") restartGame(w);
+}

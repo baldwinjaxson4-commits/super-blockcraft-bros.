@@ -2,9 +2,9 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, Lightformer } from "@react-three/drei";
 import * as THREE from "three";
-import { getGame, useHud } from "./game";
+import { beginOrRestart, getGame, useHud } from "./game";
 import { playSfx, unlockAudio } from "./audio";
-import { restartGame, startGame, stepWorld, type Input } from "./sim/world";
+import { stepWorld, type Input } from "./sim/world";
 import { Tiles, Pipes } from "./scene/Tiles";
 import { Player } from "./scene/Player";
 import { Enemies } from "./scene/Enemies";
@@ -29,13 +29,6 @@ function readGamepad(): Input {
     if (pad.buttons[9]?.pressed) beginOrRestart();
   }
   return out;
-}
-
-export function beginOrRestart() {
-  const w = getGame().world;
-  unlockAudio();
-  if (w.status === "title") startGame(w);
-  else if (w.status === "gameover" || w.status === "won") restartGame(w);
 }
 
 /** The single per-frame stepper: input -> sim -> sounds -> camera/light -> HUD. */

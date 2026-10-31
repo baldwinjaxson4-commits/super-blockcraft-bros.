@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
-import { getGame, useHud } from "../game";
+import { beginOrRestart, getGame, useHud } from "../game";
 import { setMuted, unlockAudio } from "../audio";
-import { beginOrRestart } from "../Game";
 import type { Input } from "../sim/world";
 
 const pad = (n: number, len: number) => String(Math.max(0, n)).padStart(len, "0");
