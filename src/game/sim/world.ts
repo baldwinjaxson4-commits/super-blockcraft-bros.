@@ -187,7 +187,7 @@ export function restartGame(w: World) {
 export function tileAt(w: World, tx: number, ty: number): number {
   const { width, height } = w.level;
   if (tx < 0 || tx >= width || ty < 0 || ty >= height) return T.EMPTY;
-  return w.tiles[ty * width + tx];
+  return w.tiles[ty * width + tx] ?? T.EMPTY;
 }
 
 export function isSolid(w: World, tx: number, ty: number): boolean {
@@ -319,7 +319,7 @@ function hitBlock(w: World, tx: number, ty: number) {
         [3, 10],
         [-2.2, 7],
         [2.2, 7],
-      ]) {
+      ] as const) {
         w.effects.push({ kind: "debris", x: tx + 0.5, y: ty + 0.5, vx, vy, t: 0, life: 1.4 });
       }
       addScore(w, 50);
@@ -416,7 +416,7 @@ function stepPlayer(w: World, input: Input, dt: number) {
   if (hit.ceil) {
     p.vy = -1;
     // Bump the block closest to the player's head center.
-    let best = hit.ceilTiles[0];
+    let best = hit.ceilTiles[0]!;
     for (const tx of hit.ceilTiles) {
       if (Math.abs(tx + 0.5 - p.x) < Math.abs(best + 0.5 - p.x)) best = tx;
     }
@@ -457,10 +457,10 @@ function stepEnemies(w: World, dt: number) {
   // Walking enemies turn around when they bump into each other.
   const n = w.enemies.length;
   for (let i = 0; i < n; i++) {
-    const a = w.enemies[i];
+    const a = w.enemies[i]!;
     if (a.state !== "walk") continue;
     for (let j = i + 1; j < n; j++) {
-      const b = w.enemies[j];
+      const b = w.enemies[j]!;
       if (b.state !== "walk" || !overlap(a, b)) continue;
       const left = a.x < b.x ? a : b;
       const right = left === a ? b : a;

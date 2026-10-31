@@ -42,7 +42,7 @@ describe("platformer sim", () => {
   it("stomping an enemy squashes it and bounces the player", () => {
     const w = createWorld();
     startGame(w);
-    const e = w.enemies[0];
+    const e = w.enemies[0]!;
     e.state = "walk";
     e.vx = 0;
     w.player.x = e.x;
@@ -56,7 +56,7 @@ describe("platformer sim", () => {
   it("touching an enemy from the side while small loses a life", () => {
     const w = createWorld();
     startGame(w);
-    const e = w.enemies[0];
+    const e = w.enemies[0]!;
     e.state = "walk";
     w.player.x = e.x - 0.5;
     stepWorld(w, idle, 1 / 60);
