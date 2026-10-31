@@ -107,7 +107,7 @@ function MushroomModel({ index }: { index: number }) {
 }
 
 export function Mushrooms() {
-  const count = useMemo(() => getGame().world.level.tiles.filter((t) => t === T.QMUSH).length, []);
+  const count = useMemo(() => getGame().world.level.tiles.filter((t) => t === T.QPOWER).length, []);
   return (
     <>
       {Array.from({ length: count }, (_, i) => (
