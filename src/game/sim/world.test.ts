@@ -46,7 +46,7 @@ describe("platformer sim", () => {
     e.state = "walk";
     e.vx = 0;
     w.player.x = e.x;
-    w.player.y = e.y + 1.5;
+    w.player.y = e.y + 0.8;
     w.player.vy = -5;
     stepWorld(w, idle, 1 / 30);
     expect(e.state).toBe("squashed");
