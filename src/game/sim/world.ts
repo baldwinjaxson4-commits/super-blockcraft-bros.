@@ -541,10 +541,11 @@ export function flagBonus(heightAboveBase: number): number {
 function checkFlag(w: World) {
   const p = w.player;
   const poleX = w.level.flagX + 0.5;
-  if (p.x + p.w / 2 < poleX - 0.05) return;
+  // Touching the pole's base block counts as grabbing the pole.
+  if (p.x + p.w / 2 < w.level.flagX - 0.02) return;
   w.status = "flag";
   w.flagPhase = "slide";
-  p.x = poleX - p.w / 2 - 0.05;
+  p.x = poleX - p.w / 2 - 0.08;
   p.vx = 0;
   p.vy = 0;
   p.facing = 1;

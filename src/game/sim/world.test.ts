@@ -66,6 +66,17 @@ describe("platformer sim", () => {
     expect(w.status).toBe("playing");
   });
 
+  it("reaching the flagpole clears the course", () => {
+    const w = createWorld();
+    startGame(w);
+    w.enemies.forEach((e) => (e.state = "dead"));
+    w.player.x = 192;
+    sim(w, { ...idle, right: true }, 2);
+    expect(w.status).toBe("flag");
+    sim(w, idle, 6);
+    expect(w.status).toBe("won");
+  });
+
   it("flag bonus is highest at the top of the pole", () => {
     expect(flagBonus(8.5)).toBe(5000);
     expect(flagBonus(0.5)).toBe(100);
