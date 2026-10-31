@@ -51,7 +51,7 @@ function Stepper({ onReady }: { onReady: () => void }) {
     // Side-view camera follows the player horizontally.
     const p = w.player;
     const tx = THREE.MathUtils.clamp(p.x + p.facing * 1.5, CAM_HALF_WIDTH, w.level.width - CAM_HALF_WIDTH);
-    const ty = 6.2 + Math.max(0, p.y - 7) * 0.6;
+    const ty = 6.8 + Math.max(0, p.y - 7) * 0.6;
     const cam = state.camera;
     const k = 1 - Math.exp(-CAM_FOLLOW * dt);
     cam.position.x += (tx - cam.position.x) * (frames.current === 0 ? 1 : k);
@@ -178,7 +178,7 @@ export default function Game() {
         shadows
         flat
         dpr={[1, 2]}
-        camera={{ fov: 40, position: [CAM_HALF_WIDTH, 6.2, 17], near: 0.1, far: 200 }}
+        camera={{ fov: 40, position: [CAM_HALF_WIDTH, 6.8, 17], near: 0.1, far: 200 }}
         onPointerDown={unlockAudio}
       >
         <color attach="background" args={["#8fd0ff"]} />

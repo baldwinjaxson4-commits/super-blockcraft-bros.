@@ -24,7 +24,7 @@ export function Tiles() {
     for (const t of level.tiles) {
       if (t === T.GROUND) {
         c.grass += GROUND_DEPTH.length;
-        c.dirt += GROUND_DEPTH.length;
+        c.dirt += GROUND_DEPTH.length * 2;
       } else if (t === T.BRICK) c.brick++;
       else if (t === T.QCOIN || t === T.QMUSH) {
         c.question++;
@@ -65,6 +65,8 @@ export function Tiles() {
           const above = ty + 1 < height ? w.tiles[(ty + 1) * width + tx] : T.EMPTY;
           const k: Key = above === T.GROUND ? "dirt" : "grass";
           for (const z of GROUND_DEPTH) push(k, x, y, z);
+          // Extra dirt below the bottom row so the ground never shows sky under it.
+          if (ty === 0) for (const z of GROUND_DEPTH) push("dirt", x, -0.5, z);
         } else if (t === T.BRICK) push("brick", x, y, 0);
         else if (t === T.QCOIN || t === T.QMUSH) push("question", x, y, 0);
         else if (t === T.USED) push("used", x, y, 0);

@@ -80,7 +80,7 @@ export function Hud() {
             START
           </button>
           <ul className="controls-list">
-            <li>← → / A D &nbsp; move</li>
+            <li>ARROWS / A D &nbsp; move</li>
             <li>SPACE / W / Z &nbsp; jump</li>
             <li>SHIFT / X &nbsp; run</li>
             <li>ENTER &nbsp; start</li>
