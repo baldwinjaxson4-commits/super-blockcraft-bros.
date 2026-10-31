@@ -113,12 +113,29 @@ function buildDecor(width: number, gaps: [number, number][], castleX: number) {
 
 const DARK = new THREE.MeshStandardMaterial({ color: "#120a06", roughness: 1 });
 
+/** Large grass field behind the play lane so background hills and trees sit on land. */
+function Field({ width }: { width: number }) {
+  const mat = useMemo(() => {
+    const tex = getMaterials().grass[2].map!.clone();
+    tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+    tex.repeat.set(width + 40, 30);
+    tex.needsUpdate = true;
+    return new THREE.MeshStandardMaterial({ map: tex, roughness: 1 });
+  }, [width]);
+  return (
+    <mesh rotation-x={-Math.PI / 2} position={[width / 2, 1.99, -16.5]} material={mat} receiveShadow>
+      <planeGeometry args={[width + 40, 30]} />
+    </mesh>
+  );
+}
+
 export function Decor() {
   const mats = getMaterials();
   const { level } = getGame().world;
   const d = useMemo(() => buildDecor(level.width, level.gaps, level.castleX), [level]);
   return (
     <>
+      <Field width={level.width} />
       <Instances positions={d.grass} material={mats.grass} />
       <Instances positions={d.dirt} material={mats.dirt} />
       <Instances positions={d.leaves} material={mats.leaves} shadows />
