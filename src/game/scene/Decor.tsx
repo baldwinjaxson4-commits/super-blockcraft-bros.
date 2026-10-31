@@ -116,7 +116,7 @@ const DARK = new THREE.MeshStandardMaterial({ color: "#120a06", roughness: 1 });
 /** Large grass field behind the play lane so background hills and trees sit on land. */
 function Field({ width }: { width: number }) {
   const mat = useMemo(() => {
-    const tex = getMaterials().grass[2].map!.clone();
+    const tex = getMaterials().grass[2]!.map!.clone();
     tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
     tex.repeat.set(width + 40, 30);
     tex.needsUpdate = true;

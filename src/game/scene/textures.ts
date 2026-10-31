@@ -32,7 +32,7 @@ function make(seed: number, draw: Draw): THREE.CanvasTexture {
   return tex;
 }
 
-const pick = (r: () => number, arr: string[]) => arr[Math.floor(r() * arr.length)];
+const pick = (r: () => number, arr: string[]) => arr[Math.floor(r() * arr.length)]!;
 
 const GRASS = ["#4f9a32", "#5bae3a", "#67bf45", "#5bae3a", "#468c2c"];
 const DIRT = ["#8a5a33", "#7a4e2c", "#96663d", "#8a5a33", "#6b4326"];
@@ -68,14 +68,18 @@ function rivets(px: Parameters<Draw>[0], c: string) {
     [2, 13],
     [13, 13],
   ])
-    px(x, y, c);
+    px(x!, y!, c);
 }
 
-let cache: Record<string, THREE.CanvasTexture> | null = null;
+let cache: ReturnType<typeof buildTextures> | null = null;
 
 export function getTextures() {
-  if (cache) return cache;
-  cache = {
+  if (!cache) cache = buildTextures();
+  return cache;
+}
+
+function buildTextures() {
+  return {
     grassTop: make(1, (px, r) => noise(px, r, GRASS)),
     dirt: make(2, (px, r) => noise(px, r, DIRT)),
     grassSide: make(3, (px, r) => {
@@ -135,7 +139,7 @@ export function getTextures() {
         "#0e4d12", "#1e7a1e", "#3cb43c", "#9be89b", "#c8f5c8", "#7ad87a", "#3cb43c", "#3cb43c",
         "#34a434", "#2e962e", "#288a28", "#228022", "#1e7a1e", "#18661a", "#125414", "#0e4d12",
       ];
-      for (let y = 0; y < 16; y++) for (let x = 0; x < 16; x++) px(x, y, cols[x]);
+      for (let y = 0; y < 16; y++) for (let x = 0; x < 16; x++) px(x, y, cols[x]!);
     }),
     pipeLip: make(9, (px) => {
       const cols = [
@@ -143,7 +147,7 @@ export function getTextures() {
         "#34a434", "#2e962e", "#288a28", "#228022", "#1e7a1e", "#18661a", "#125414", "#0e4d12",
       ];
       for (let y = 0; y < 16; y++)
-        for (let x = 0; x < 16; x++) px(x, y, y < 1 || y > 14 ? "#0a3a0c" : cols[x]);
+        for (let x = 0; x < 16; x++) px(x, y, y < 1 || y > 14 ? "#0a3a0c" : cols[x]!);
     }),
     leaves: make(10, (px, r) => {
       for (let y = 0; y < 16; y++)
@@ -162,7 +166,6 @@ export function getTextures() {
         }
     }),
   };
-  return cache;
 }
 
 let matCache: ReturnType<typeof buildMaterials> | null = null;
